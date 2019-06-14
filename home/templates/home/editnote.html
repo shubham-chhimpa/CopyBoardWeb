@@ -45,6 +45,8 @@
                     class="material-icons">clear</i>
             </div>
             <div class="mdl-layout__header-row">
+                    <span class="mdl-layout-title">Edit Note</span>
+
                 <div class="mdl-layout-spacer"></div>
                 <button id="saveBtn" class="mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect">
                     <i class="material-icons">done</i>
@@ -56,11 +58,16 @@
             <div class="page-content">
                 <!-- Your content goes here -->
             </div>
-            <div class="mdl-grid">
+            <div class="mdl-grid"  style="max-width: 600px;
+            padding: 0;
+            display: flex;
+            width: 100%;
+            margin: 0 auto;
+            flex-shrink: 0;">
 
                 <div class="mdl-cell mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-cell--12-col-desktop">
                     <form action="#">
-                        <div class="mdl-textfield mdl-js-textfield">
+                        <div class="mdl-textfield mdl-js-textfield" style="width:600px;">
                             <textarea class="mdl-textfield__input" type="text" rows="25" id="text"
                                 name="{{note.id}}">{{note.text}}</textarea>
                             <label class="mdl-textfield__label" for="text">Text lines...</label>
