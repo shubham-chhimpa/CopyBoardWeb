@@ -1,5 +1,5 @@
 from django.http import HttpResponseRedirect, JsonResponse
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import render, HttpResponse, redirect
 
 from firebase_admin import firestore
 import firebase_admin
@@ -21,7 +21,8 @@ def index(request):
 
             return HttpResponseRedirect('signin')
         else:
-            notes_docs = db.collection(u'users').document(request.session['uid']).collection('copyboard').order_by(
+            notes_docs = db.collection(u'users').document(request.session['uid']).collection(
+                'copyboard').order_by(
                 u'timestamp', direction=firestore.Query.DESCENDING).get()
             notes = []
             for doc in notes_docs:
@@ -29,6 +30,8 @@ def index(request):
             return render(request, 'home/base.html', {'notes': notes, 'name': request.session['name']})
     except:
         return HttpResponseRedirect('signin')
+
+
 
 
 def logout(request):
