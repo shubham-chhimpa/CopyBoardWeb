@@ -32,36 +32,36 @@ def index(request):
         return HttpResponseRedirect('signin')
 
 
-
-
 def logout(request):
     request.session.flush()
     return HttpResponseRedirect('signin')
 
 
 def signin(request):
-    # try:
-    if request.method == "POST":
-        # try:
-        email = request.POST.get('email')
-        password = request.POST.get('pass')
-        user_docs = db.collection(u'users').where(u'email', u'==', email).get()
-        users = []
-        for doc in user_docs:
-            print(doc.to_dict())
-            users.append(doc.to_dict())
-        user = users[0]
-        if user['pass'] == password:
-            print(user['pass'], password)
-            request.session['logged'] = True
-            request.session['email'] = user['email']
-            request.session['uid'] = user['id']
-            request.session['name'] = user['name']
+    try:
+        if request.method == "POST":
+            # try:
+            email = request.POST.get('email')
+            password = request.POST.get('pass')
+            user_docs = db.collection(u'users').where(u'email', u'==', email).get()
+            users = []
+            for doc in user_docs:
+                print(doc.to_dict())
+                users.append(doc.to_dict())
+            user = users[0]
+            if user['pass'] == password:
+                print(user['pass'], password)
+                request.session['logged'] = True
+                request.session['email'] = user['email']
+                request.session['uid'] = user['id']
+                request.session['name'] = user['name']
 
-            return HttpResponseRedirect('index')
-        else:
-            return render(request, 'home/login.html')
-    return render(request, 'home/login.html')
+                return HttpResponseRedirect('index')
+            else:
+                return render(request, 'home/login.html')
+        return render(request, 'home/login.html')
+    except:
+        return render(request, 'home/login.html')
 
 
 #         except:
@@ -130,3 +130,33 @@ def update_note(request):
 
             return JsonResponse({"success": "true"})
     return JsonResponse({"success": "false"})
+
+
+def signup(request):
+    # try:
+        if request.method == "POST":
+            # try:
+            email = request.POST.get('email')
+            password = request.POST.get('pass')
+            name = request.POST.get('name')
+            print(email)
+            user_docs = db.collection(u'users').where(u'email', u'==', email).get()
+            users = []
+            for doc in user_docs:
+                print(doc.to_dict())
+                users.append(doc.to_dict()['email'])
+            if str(email) in users:
+                print('yes')
+                render(request, 'home/signup.html',{'success' : 'false'})
+            else:
+                user_doc = db.collection(u'users').document()
+                user_doc.set({
+                    u'id': user_doc.id,
+                    u'email': email,
+                    u'pass': password,
+                    u'name': name
+                })
+                render(request, 'home/signup.html',{'success' : 'true'})
+        return render(request, 'home/signup.html')
+    # except:
+    #     return render(request, 'home/signup.html')

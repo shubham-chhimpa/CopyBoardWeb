@@ -60,7 +60,7 @@
 
       </div>
     </header>
-   
+
     <main class="mdl-layout__content">
       <div class="page-content">
         <!-- Your content goes here -->
@@ -75,11 +75,15 @@
         <div style="min-height: 0%; margin-top: 100px;"
           class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-cell--12-col-desktop">
           <div class="mdl-card__supporting-text">
-            <form action="signin" method="POST" style="margin-left: 14px;">
+            <form action="signup" method="POST" style="margin-left: 14px;">
               {% csrf_token %}
               <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                 <input class="mdl-textfield__input" type="text" id="email" name="email">
                 <label class="mdl-textfield__label" for="email">Email...</label>
+              </div>
+                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <input class="mdl-textfield__input" type="text" id="name" name="name">
+                <label class="mdl-textfield__label" for="email">Name...</label>
               </div>
               <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                 <input class="mdl-textfield__input" type="password" name="pass" id="pass">
@@ -88,12 +92,10 @@
               <!-- Accent-colored raised button with ripple -->
               <button id="signIn"
                 class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
-                SignIn
+                SignUp
               </button>
-
               <br>
-              <div style="margin-top : 32px;">Dont Have Account <a href= "{% url 'signup'%}">Signup Here</a></div>
-
+              <div style="margin-top : 32px;">Already Have Account <a href= "{% url 'signin'%}">Login In Here</a></div>
             </form>
           </div>
         </div>
@@ -102,7 +104,7 @@
 
     </main>
   </div>
-
+{{success}}
   {% if success == 'true' %}
   <script>
   alert('Registered Successfully');
